@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import Card from "./Card";
+import CreateUser from "./CreateUser";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [reload, setReload] = useState(false);
+
+  const handleUserCreated = (userName) => {
+    setSelectedUser(userName);
+    setReload(!reload);
+  };
+
+  const handleUserSearched = (userName) => {
+    setSelectedUser(userName);
+    setReload(!reload);
+  };
+
+  
+
+  return (
+    <div>
+      <CreateUser
+        onUserCreated={handleUserCreated}
+        onUserSearched={handleUserSearched}
+      />
+
+      {selectedUser && (
+        <>
+
+          <Card userName={selectedUser} reloadTasks={reload} />
+        </>
+      )}
+
+    </div>
+  );
 };
 
 export default Home;
